@@ -50,7 +50,3 @@ https://api-local.crayon.evoart.ai:8443/api-docs/
 ### About
 
 -   [Unlocking the Power of Local Hosts for Seamless Development](./docs/Unlocking%20the%20Power%20of%20Local%20Hosts%20for%20Seamless%20Development.md)
-
-## License
-
-This project is licensed under the GNU AGPLv3 License - see the [LICENSE.md](./LICENSE) file for details
