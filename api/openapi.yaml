@@ -1,0 +1,129 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: damoncote7@gmail.com
+    name: DamonCote
+    url: https://github.com/DamonCote
+  description: Node API。
+  title: CrayonElite RESTful API
+  version: 1.0.0
+servers:
+- description: Main server
+  url: https://api.crayon.evoart.ai/api/v1
+- description: Local server
+  url: https://api-local.crayon.evoart.ai:8443/api/v1
+paths:
+  /version:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Version'
+          description: Successful operation
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal server error
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Get version of the management
+      tags:
+      - Version
+      x-swagger-router-controller: Version
+components:
+  responses:
+    NotFoundError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The specified resource was not found
+    ForbiddenError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error
+    UnauthorizedError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized
+  schemas:
+    Version:
+      properties:
+        version:
+          type: string
+      required:
+      - version
+      type: object
+    BatchRequest:
+      properties:
+        name:
+          type: string
+        activeAt:
+          type: integer
+        expiredAt:
+          type: integer
+        total:
+          type: integer
+      type: object
+    Error:
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    BadRequestError:
+      properties:
+        error:
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    Filter:
+      example:
+        key: name
+        op: ==
+        val: example
+      properties:
+        key:
+          type: string
+        op:
+          type: string
+        val:
+          type: string
+      required:
+      - key
+      - op
+      - val
+      type: object
+  securitySchemes:
+    apiKey:
+      in: header
+      name: APIKEY
+      type: apiKey
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http

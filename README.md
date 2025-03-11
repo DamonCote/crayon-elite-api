@@ -20,20 +20,36 @@ Installing dependencies:
 
 ```
 cd crayon-elite-api
-npm install
+yarn
 ```
 
 ### Running
 
 ```
-npm start
+yarn start
 ```
 
 ### Deveploying
 
+Before Starting Development, Configure Local Hosts First.
+
 ```
-npm run dev
+127.0.0.1 api-local.crayon.evoart.ai
 ```
+
+Next, Run the Startup Command
+
+```
+yarn dev
+```
+
+Access the following address in your browser to check the API documentation.
+
+https://api-local.crayon.evoart.ai:8443/api-docs/
+
+### About
+
+-   [Unlocking the Power of Local Hosts for Seamless Development](./docs/Unlocking%20the%20Power%20of%20Local%20Hosts%20for%20Seamless%20Development.md)
 
 ## License
 
