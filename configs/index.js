@@ -34,8 +34,8 @@ const configEnv = {
     },
     development: {},
     production: {
-        httpPort: 80,
-        httpsPort: 443,
+        httpPort: 8180,
+        httpsPort: 8443,
         mongoUrl: "mongodb://127.0.0.1:27017/crayon?authMechanism=DEFAULT",
         mongoAuth: {
             user: "admin",

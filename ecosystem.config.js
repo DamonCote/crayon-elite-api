@@ -3,6 +3,7 @@ module.exports = {
         {
             name: "crayon-elite-service",
             script: "./src/start.js",
+            cwd: "./api-service",
             merge_logs: true,
             max_restarts: 20,
             instances: 1,

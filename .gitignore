@@ -9,7 +9,7 @@ dist/
 yarn.lock
 # Compiled Java class files
 *.class
-
+local_*
 # Compiled Python bytecode
 *.py[cod]
 
