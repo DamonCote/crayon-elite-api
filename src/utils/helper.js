@@ -35,15 +35,14 @@ const utilHelper = (() => {
      * @param {*} req
      * @returns
      */
-    const getIP = (req) => {
+    const getIP = ({ headers = {}, ip = "", connection = {}, socket = {} }) => {
         try {
-            req.headers = req.headers || {};
             let clientIp =
-                req.headers["x-forwarded-for"] ||
-                req.ip ||
-                req.connection.remoteAddress ||
-                req.socket.remoteAddress ||
-                req.connection.socket.remoteAddress;
+                headers["x-forwarded-for"] ||
+                ip ||
+                connection.remoteAddress ||
+                socket.remoteAddress ||
+                connection.socket.remoteAddress;
             clientIp = clientIp.replace("::ffff:", "");
             const arrayIPs = clientIp.split(",");
             if (arrayIPs.length > 1) {
@@ -51,7 +50,7 @@ const utilHelper = (() => {
             }
             return clientIp;
         } catch (error) {
-            return req.ip || "";
+            return ip || "";
         }
     };
 
