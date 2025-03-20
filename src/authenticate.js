@@ -7,6 +7,7 @@ const Administrators = require("./models/administrators");
 const Accesstoken = require("./models/accesstokens");
 const { verifyToken, getToken } = require("./tokens");
 const { promiseFn } = require("./utils/helper");
+const utilHelper = require("./utils/helper");
 
 const configs = require("../configs")();
 const createError = require("http-errors");
@@ -20,11 +21,34 @@ var jwt = require("jsonwebtoken");
 passport.serializeUser(Administrators.serializeUser());
 passport.deserializeUser(Administrators.deserializeUser());
 
+async function updatedLoginedInfo(account, req) {
+    const [error, result] = await utilHelper.promiseFn(() =>
+        Administrators.findOneAndUpdate(
+            { _id: account._id },
+            {
+                $set: {
+                    "logined.ip": utilHelper.getIP(req),
+                    "logined.logined_at": utilHelper.getNow(),
+                },
+            },
+            { useFindAndModify: false, new: true }
+        )
+    );
+    if (error) {
+        logger.error("Update login info error", {
+            params: {
+                error,
+            },
+        });
+    }
+    return result;
+}
+
 // Define local authentication strategy
 exports.localPassport = passport.use(
     new LocalStrategy(
-        { usernameField: "username" },
-        async (username, password, done) => {
+        { usernameField: "username", passReqToCallback: true },
+        async (req, username, password, done) => {
             const [error, result] = await promiseFn(() =>
                 Administrators.findOne({ username })
             );
@@ -34,6 +58,8 @@ exports.localPassport = passport.use(
                 if (result) {
                     const match = password === result.password;
                     if (match) {
+                        // Update logined info
+                        await updatedLoginedInfo(result, req);
                         return done(null, result);
                     } else {
                         return done(null, false, {

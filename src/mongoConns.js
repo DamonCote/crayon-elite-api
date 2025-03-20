@@ -14,6 +14,7 @@ class MongoConns {
             useNewUrlParser: true,
             useCreateIndex: true,
             useUnifiedTopology: true,
+            useFindAndModify: false,
             ...mongoAuth,
         });
         this.mainDB.then(

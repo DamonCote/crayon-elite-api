@@ -4,6 +4,16 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 const mongoConns = require("../mongoConns")();
 
+const loginedSchema = new Schema({
+    logined_at: {
+        type: Number,
+        default: 0,
+    },
+    ip: {
+        type: String,
+    },
+});
+
 /**
  * Administrator schema
  */
@@ -69,6 +79,9 @@ const Administrator = new Schema({
     state: {
         type: Number,
         default: 0,
+    },
+    logined: {
+        type: loginedSchema,
     },
 });
 

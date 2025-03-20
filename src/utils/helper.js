@@ -30,11 +30,36 @@ const utilHelper = (() => {
             })
             .catch((err) => [err]);
     };
+    /**
+     * Get IP address from request
+     * @param {*} req
+     * @returns
+     */
+    const getIP = (req) => {
+        try {
+            req.headers = req.headers || {};
+            let clientIp =
+                req.headers["x-forwarded-for"] ||
+                req.ip ||
+                req.connection.remoteAddress ||
+                req.socket.remoteAddress ||
+                req.connection.socket.remoteAddress;
+            clientIp = clientIp.replace("::ffff:", "");
+            const arrayIPs = clientIp.split(",");
+            if (arrayIPs.length > 1) {
+                clientIp = arrayIPs[0]; // First ip is the client ip
+            }
+            return clientIp;
+        } catch (error) {
+            return req.ip || "";
+        }
+    };
 
     return {
         randomNumber,
         getNow,
         promiseFn,
+        getIP,
     };
 })();
 
