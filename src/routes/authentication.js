@@ -37,7 +37,7 @@ router
     .options(cors.corsWithOptions, (req, res) => {
         res.sendStatus(200);
     })
-    .get(cors.corsWithOptions, (req, res) => {
+    .post(cors.corsWithOptions, (req, res) => {
         req.logout();
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");

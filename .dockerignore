@@ -1,0 +1,10 @@
+
+.DS_Store
+__tests__
+docs
+local_*
+README.md
+node_modules
+dist
+yarn.lock
+*.log
